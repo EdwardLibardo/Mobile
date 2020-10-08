@@ -63,7 +63,7 @@ public abstract class BaseMobileTest {
 		return new FirstScreen(driver);
 	}
 
-	protected CountriesScreen returnCountriesScrenn(){
+	protected CountriesScreen returnCountriesScreen(){
 		return new CountriesScreen(driver);
 	}
 

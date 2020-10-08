@@ -27,12 +27,10 @@ public class DestinationScreen extends BaseScreen {
         return this;
     }
 
-    public DateScreen writeTheCity(String city){
+    public DateScreen writeTheCity(String city) throws InterruptedException {
         _destinationTextBox.sendKeys(city);
+        Thread.sleep(3000);
         _cityOption.click();
         return new DateScreen(driver);
     }
-
-
-
 }

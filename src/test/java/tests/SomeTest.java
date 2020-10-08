@@ -1,7 +1,5 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import screens.*;
@@ -10,6 +8,13 @@ import util.tests.BaseMobileTest;
 public class SomeTest extends BaseMobileTest {
 
     LandingScreen _landingScreen;
+    CountriesScreen _countriesScreen;
+    PrivacyDataScreen _privacyDataScreen;
+    DestinationScreen _destinationScreen;
+    DateScreen _dateScreen;
+    SettingsScreen _settingsScreen;
+    ConfigurationPrivacyData _configurationPrivacyData;
+
 
     /*@Parameters({"someParameter", "someParameter"})
     @Test(groups = {"someGroup"})
@@ -19,35 +24,44 @@ public class SomeTest extends BaseMobileTest {
         SecondScreen nameOfMySecondScreen = nameOfMyFirstScreen.returnSecondScreen();
         nameOfMySecondScreen.flowInsideSecondScreen();
     }*/
-    @Test(groups = {"FirstTest"})
+    @Test(groups = {"trivago"})
     public void acceptingPrivacyDataTest() {
-        CountriesScreen countriesScreen = returnCountriesScrenn();
-        PrivacyDataScreen privacyDataScreen = countriesScreen.selectCountry("Colombia");
-        privacyDataScreen.acceptPrivacyData();
+        _countriesScreen = returnCountriesScreen();
+        _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
+        _privacyDataScreen.acceptPrivacyData();
+        _privacyDataScreen.verifyTheNewView();
     }
 
-    @Test(dependsOnMethods = {"acceptingPrivacyDataTest"}, groups = {"trivago"})
-    public void lookingForHotel() {
-        //acceptingPrivacyDataTest();
-        DestinationScreen destinationScreen = returnDestinationScreen();
-        DateScreen dateScreen = destinationScreen.clckOnTextBox().writeTheCity("Cartagena");
-        dateScreen.selectingDateToBookTheHotel("1", "5");
+    @Test(groups = {"trivago"})
+    public void lookingForHotel() throws InterruptedException {
+        _countriesScreen = returnCountriesScreen();
+        _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
+        _destinationScreen = _privacyDataScreen.acceptPrivacyData();
+        _dateScreen = _destinationScreen.clckOnTextBox().writeTheCity("Cartagena");
+        _dateScreen.selectingDateToBookTheHotel("1", "5");
     }
 
-    @Test(groups = {"ThirdTest"})
-    public void navigationBarElements() {
-        //lookingForHotel();
-        _landingScreen = returnLandingScreen();
+    @Test(groups = {"trivago"})
+    public void navigationBarElements() throws InterruptedException {
+        _countriesScreen = returnCountriesScreen();
+        _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
+        _destinationScreen = _privacyDataScreen.acceptPrivacyData();
+        _dateScreen = _destinationScreen.clckOnTextBox().writeTheCity("Cartagena");
+        _landingScreen = _dateScreen.selectingDateToBookTheHotel("1", "5");
         _landingScreen.verifyTheNavigationBar();
     }
 
-    @Test(groups = {"FourthTest"})
-    public void configurationOfPrivacyData() {
-        //navigationBarElements();
-        SettingsScreen settingsScreen = _landingScreen.clickOnSettings();
-        ConfigurationPrivacyData configurationPrivacyData = settingsScreen.clickOnConfigurationOfPrivacyData();
+    @Test(groups = {"trivago"})
+    public void configurationOfPrivacyData() throws InterruptedException {
+        _countriesScreen = returnCountriesScreen();
+        _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
+        _destinationScreen = _privacyDataScreen.acceptPrivacyData();
+        _dateScreen = _destinationScreen.clckOnTextBox().writeTheCity("Cartagena");
+        _landingScreen = _dateScreen.selectingDateToBookTheHotel("1", "5");
+        _settingsScreen = _landingScreen.verifyTheNavigationBar().clickOnSettings();
+        _configurationPrivacyData = _settingsScreen.clickOnConfigurationOfPrivacyData();
         //The checkboxes AppsFlyer, GTM+Firebase and Facebook are checked/true by default
-        configurationPrivacyData.enableAppsFlyerCheckbox(true)
+        _configurationPrivacyData.enableAppsFlyerCheckbox(true)
                 .enableFacebookCheckbox(false)
                 .enableGTMFirebaseCheckbox(false)
                 .clickOnSaveButton();

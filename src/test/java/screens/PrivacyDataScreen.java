@@ -3,6 +3,8 @@ package screens;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import util.screens.BaseScreen;
@@ -45,7 +47,27 @@ public class PrivacyDataScreen extends BaseScreen {
         Assert.assertTrue(_textOfSecondParagraph.getText().contains(_secondParagraph));
         Assert.assertTrue(_textOfThirdParagraph.getText().contains(_thirdParapraph));
         _acceptBtn.click();
-        //Assert.assertEquals(false, _title.isDisplayed());
         return new DestinationScreen(driver);
+    }
+
+    public void verifyTheNewView() {
+        if (!isElementPresent(_title)) {
+            Assert.fail();
+        }
+        //Assert.assertEquals(false, _title.isDisplayed());
+    }
+
+    private boolean isElementPresent(WebElement element) {
+        //if the element exists then the test must fail, that's why I added Assert.fail()
+        try {
+            String title = driver.findElementByAndroidUIAutomator("new UiSelector().resourceIdMatches(\"" +
+                    ".*activityCookieConsentContentTitleTextView\")").getText();
+            System.out.println("false");
+            return false;
+        } catch (Exception e) {
+            System.out.println("true");
+            return true;
+            //Element doesn't exist
+        }
     }
 }
