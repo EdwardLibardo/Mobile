@@ -24,7 +24,7 @@ public class SomeTest extends BaseMobileTest {
         SecondScreen nameOfMySecondScreen = nameOfMyFirstScreen.returnSecondScreen();
         nameOfMySecondScreen.flowInsideSecondScreen();
     }*/
-    @Test(groups = {"trivago"})
+    @Test(priority = 1)
     public void acceptingPrivacyDataTest() {
         _countriesScreen = returnCountriesScreen();
         _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
@@ -32,7 +32,7 @@ public class SomeTest extends BaseMobileTest {
         _privacyDataScreen.verifyTheNewView();
     }
 
-    @Test(groups = {"trivago"})
+    @Test(priority = 2)
     public void lookingForHotel() throws InterruptedException {
         _countriesScreen = returnCountriesScreen();
         _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
@@ -41,7 +41,7 @@ public class SomeTest extends BaseMobileTest {
         _dateScreen.selectingDateToBookTheHotel("1", "5");
     }
 
-    @Test(groups = {"trivago"})
+    @Test(priority = 3)
     public void navigationBarElements() throws InterruptedException {
         _countriesScreen = returnCountriesScreen();
         _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
@@ -51,7 +51,7 @@ public class SomeTest extends BaseMobileTest {
         _landingScreen.verifyTheNavigationBar();
     }
 
-    @Test(groups = {"trivago"})
+    @Test(priority = 4)
     public void configurationOfPrivacyData() throws InterruptedException {
         _countriesScreen = returnCountriesScreen();
         _privacyDataScreen = _countriesScreen.selectCountry("Colombia");
